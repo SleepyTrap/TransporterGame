@@ -57,6 +57,9 @@ while running:
     if helicopter_pos.y > truck_pos.y:
         helicopter_pos.y -= helicopter_speed * dt
 
+    if(helicopter_pos.x == truck_pos.x and helicopter_pos.y == truck_pos.y):
+        print("You have been caught by the helicopter")
+        running = False
 
 
     # flip() the display to put your work on screen
