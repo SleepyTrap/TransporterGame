@@ -145,7 +145,7 @@ class helicopter(movableObject):
 
 class home(immovableObject):
     m_capacity = 100
-    
+
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
 
@@ -155,7 +155,7 @@ class home(immovableObject):
     def draw(screen, self):
         screen.blit(self.m_image, (self.m_pos_x, self.m_pos_y))
 
-    def onContact():
+    def onContact(truck_pos_x, truck_pos_y):
         pass #TODO implement
 
 class gasStation(immovableObject):
@@ -168,10 +168,11 @@ class gasStation(immovableObject):
     def draw(screen, self):
         screen.blit(self.m_image, (self.m_pos_x, self.m_pos_y))
 
-    def onContact():
+    def onContact(truck_pos_x, truck_pos_y):
         pass #TODO implement
 
 class storage(immovableObject):
+    m_ore_stored = 0
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
 
@@ -181,5 +182,5 @@ class storage(immovableObject):
     def draw(screen, self):
         screen.blit(self.m_image, (self.m_pos_x, self.m_pos_y))
 
-    def onContact():
-        pass #TODO implement
+    def onContact(truck_pos_x, truck_pos_y):
+        pass #TODO implement 
