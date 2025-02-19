@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class gameObject(ABC):
     m_pos_x = 0
     m_pos_y = 0
-    m_image = None
+    m_image = pygame.image.load('placeholder.png')
 
     def __init__(self, pos_x, pos_y):
         self.m_pos_x = pos_x
@@ -14,9 +14,9 @@ class gameObject(ABC):
     def set_image(self):
         pass
 
-    @abstractmethod
+
     def draw(screen, self):
-        pass
+        screen.blit(self.m_image,(self.m_pos_x, self.m_pos_y))
 
 class movableObject(gameObject):
     m_speed = 0
