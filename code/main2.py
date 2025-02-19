@@ -14,7 +14,6 @@ class gameObject(ABC):
     def set_image(self):
         pass
 
-
     def draw(screen, self):
         screen.blit(self.m_image,(self.m_pos_x, self.m_pos_y))
 
