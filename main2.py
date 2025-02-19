@@ -1,29 +1,6 @@
 import pygame
 from abc import ABC, abstractmethod
 
-class gameMGMT():
-    m_params = None #array of parameters
-    m_screen = pygame.display.set_mode((1920, 1080))
-    m_clock = pygame.time.Clock()
-    m_running = True
-    m_dt = 0
-    #TODO add all gameObjects here
-    
-
-    def __init__(self, params):
-        self.m_params = params
-        pygame.init()
-
-    def startGame():
-        pass #TODO implement
-
-    def endGame():
-        pass #TODO implement
-
-    def runGame():
-        pass #TODO implement
-
-
 class gameObject(ABC):
     m_pos_x = 0
     m_pos_y = 0
@@ -89,6 +66,7 @@ class truck(movableObject):
         super().__init__(pos_x, pos_y, speed)
         self.m_consumption = consumption
         self.m_capacity = capacity
+        self.set_image
 
     def move(self, dt):
         keys = pygame.key.get_pressed()
@@ -116,6 +94,7 @@ class truck(movableObject):
 class helicopter(movableObject):
     def __init__(self, pos_x, pos_y, speed):
         super().__init__(pos_x, pos_y, speed)
+        self.set_image()
     
     def move(self, dt, truck_pos_x, truck_pos_y):
         if self.m_pos_x < truck_pos_x:
@@ -142,12 +121,12 @@ class helicopter(movableObject):
     def disappear():
         pass #TODO implement
 
-
 class home(immovableObject):
     m_capacity = 100
     
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.set_image()
 
     def set_image(self):
         self.m_image = pygame.image.load("home.png")
@@ -161,6 +140,7 @@ class home(immovableObject):
 class gasStation(immovableObject):
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.set_image
 
     def set_image(self):
         self.m_image = pygame.image.load("gas_station.png")
@@ -174,6 +154,7 @@ class gasStation(immovableObject):
 class storage(immovableObject):
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.set_image()
 
     def set_image(self):
         self.m_image = pygame.image.load("storage.png")
@@ -182,4 +163,29 @@ class storage(immovableObject):
         screen.blit(self.m_image, (self.m_pos_x, self.m_pos_y))
 
     def onContact():
+        pass #TODO implement
+
+class gameMGMT():
+    m_params = None #array of parameters
+    m_screen = pygame.display.set_mode((1280, 720))
+    m_clock = pygame.time.Clock()
+    m_running = True
+    m_dt = 0
+    m_player = truck(m_screen.get_width()/2,m_screen.get_height()/2,200,1,100)
+    m_heli = helicopter(m_screen.get_width()-100,0,210)
+    m_home = home(0,m_screen.get_height()/2)
+    m_gas_station = gasStation(m_screen.get_width()/2,m_screen.get_height-150)
+    m_storage = storage(m_screen.get_width()-100,m_screen.get_height()-100)
+
+    def __init__(self, params):
+        self.m_params = params
+        pygame.init()
+
+    def startGame():
+        pass #TODO implement
+
+    def endGame():
+        pass #TODO implement
+
+    def runGame():
         pass #TODO implement
