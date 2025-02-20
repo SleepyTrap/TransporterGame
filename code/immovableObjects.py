@@ -14,12 +14,8 @@ class immovableObject(gameObject):
     def draw(self, screen):
         pass
 
-    @abstractmethod
-    def onContact(self, truck_pos_x, truck_pos_y):
-        pass
-
 class home(immovableObject):
-    m_capacity = 100
+    m_ore_stored = 100
 
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
@@ -32,8 +28,8 @@ class home(immovableObject):
     def draw(self, screen):
         screen.blit(self.m_image, self.m_rect.topleft)
 
-    def onContact(self, truck_pos_x, truck_pos_y):
-        pass #TODO implement
+    def storeOre(self, amount):
+        self.m_ore_stored -= amount
 
 class gasStation(immovableObject):
     def __init__(self, pos_x, pos_y):
@@ -64,5 +60,7 @@ class storage(immovableObject):
     def draw(self, screen):
         screen.blit(self.m_image, self.m_rect.topleft)
 
-    def onContact(self, truck_pos_x, truck_pos_y):
-        pass #TODO implement
+    def storeOre(self, amount):
+        self.m_ore_stored += amount
+
+    
