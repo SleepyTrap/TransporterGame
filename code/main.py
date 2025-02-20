@@ -9,7 +9,7 @@ dt = 0
 
 player_speed = 250
 helicopter_speed = 200
-# Load the truck image
+
 truck_image = pygame.image.load("truck.png")
 gas_station_image = pygame.image.load("gas_station.png")
 home_image = pygame.image.load("home.png")
