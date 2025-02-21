@@ -1,4 +1,4 @@
-from gameMGMT import gameMGMT
+from gameMGMT import GameMGMT
 
-MGMT = gameMGMT()
+MGMT = GameMGMT()
 MGMT.start_game()

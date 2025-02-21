@@ -1,24 +1,37 @@
 import pygame
 from abc import ABC, abstractmethod
-from gameObject import gameObject
+from gameObject import GameObject
 
-class immovableObject(gameObject):
+class ImmovableObject(GameObject):
+    """
+    Abstract base class for all immovable objects.
+    """
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
 
     @abstractmethod
     def set_image(self):
+        """
+        Abstract method to set the image of the object.
+        """
         pass
 
     @abstractmethod
     def draw(self, screen):
+        """
+        Abstract method to draw the object on the screen.
+        """
         pass
 
-class home(immovableObject):
-    m_ore_stored = 100
 
+
+class Home(ImmovableObject):
+    """
+    Class representing the home.
+    """
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.m_ore_stored = 100
         self.set_image()
 
     def set_image(self):
@@ -28,10 +41,13 @@ class home(immovableObject):
     def draw(self, screen):
         screen.blit(self.m_image, self.m_rect.topleft)
 
-    def storeOre(self, amount):
+    def store_ore(self, amount):
         self.m_ore_stored -= amount
 
-class gasStation(immovableObject):
+class GasStation(ImmovableObject):
+    """
+    Class representing the gas station.
+    """
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
         self.set_image()
@@ -43,14 +59,13 @@ class gasStation(immovableObject):
     def draw(self, screen):
         screen.blit(self.m_image, self.m_rect.topleft)
 
-    def onContact(self, truck_pos_x, truck_pos_y):
-        pass #TODO implement
-
-class storage(immovableObject):
-    m_ore_stored = 0
-
+class Storage(ImmovableObject):
+    """
+    Class representing the storage.
+    """
     def __init__(self, pos_x, pos_y):
         super().__init__(pos_x, pos_y)
+        self.m_ore_stored = 0
         self.set_image()
 
     def set_image(self):
@@ -60,7 +75,6 @@ class storage(immovableObject):
     def draw(self, screen):
         screen.blit(self.m_image, self.m_rect.topleft)
 
-    def storeOre(self, amount):
+    def store_ore(self, amount):
         self.m_ore_stored += amount
 
-    

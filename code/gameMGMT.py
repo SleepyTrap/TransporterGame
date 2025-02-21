@@ -1,10 +1,10 @@
 import pygame
 from abc import ABC, abstractmethod
-from gameObject import gameObject
-from immovableObjects import immovableObject, home, gasStation, storage
-from movableObjects import movableObject, truck, helicopter
+from gameObject import GameObject
+from immovableObjects import ImmovableObject, Home, GasStation, Storage
+from movableObjects import MovableObject, Truck, Helicopter
 
-class gameMGMT:
+class GameMGMT:
     def __init__(self, params=None):
         """
         Initialize the game management class.
@@ -18,13 +18,14 @@ class gameMGMT:
         self.m_won = False
         self.m_dt = 0
         self.m_win_condition = 80
-        self.m_player = truck(self.m_screen.get_width() / 2, self.m_screen.get_height() / 2, 500, 1, 5)
-        self.m_heli = helicopter(self.m_screen.get_width() - 100, 0, 210)
-        self.m_home = home(100, self.m_screen.get_height() / 2)
-        self.m_gas_station = gasStation(self.m_screen.get_width() / 2, self.m_screen.get_height() - 150)
-        self.m_storage = storage(self.m_screen.get_width() - 100, self.m_screen.get_height() - 100)
+        self.m_player = Truck(self.m_screen.get_width() / 2, self.m_screen.get_height() / 2, 500, 1, 20)
+        self.m_heli = Helicopter(self.m_screen.get_width() - 100, 0, 210)
+        self.m_home = Home(100, self.m_screen.get_height() / 2)
+        self.m_gas_station = GasStation(self.m_screen.get_width() / 2, self.m_screen.get_height() - 150)
+        self.m_storage = Storage(self.m_screen.get_width() - 100, self.m_screen.get_height() - 100)
         pygame.font.init()
         self.m_font = pygame.font.SysFont('Comic Sans MS', 20)
+        self.m_big_font = pygame.font.SysFont('Comic Sans MS', 100)
         self.update_text()
 
     def update_text(self):
@@ -34,8 +35,7 @@ class gameMGMT:
         self.m_text = self.m_font.render(
             f'Fuel: {round(self.m_player.m_fuel)}, Player has Ore: {self.m_player.m_ore}, '
             f'Heli has Ore: {self.m_heli.m_ore}, Ore stored in Storage: {self.m_storage.m_ore_stored}, '
-            f'Ore stored in Home: {self.m_home.m_ore_stored}, Ore stolen by Heli: {self.m_heli.m_oreStolen}'
-            , False, (0, 0, 0)
+            f'Ore stored in Home: {self.m_home.m_ore_stored}, Ore stolen by Heli: {self.m_heli.m_ore_stolen}', False, (0, 0, 0)
         )
 
     def start_game(self):
@@ -58,17 +58,17 @@ class gameMGMT:
             self.m_player.refuel()
 
         if self.m_player.m_rect.colliderect(self.m_home.m_rect) and not self.m_player.m_ore:
-            self.m_player.withdrawOre()
-            self.m_home.storeOre(self.m_player.m_capacity)
+            self.m_player.withdraw_ore()
+            self.m_home.store_ore(self.m_player.m_capacity)
 
         if self.m_player.m_ore:
             if self.m_player.m_rect.colliderect(self.m_storage.m_rect):
-                self.m_storage.storeOre(self.m_player.m_capacity)
-                self.m_player.depositOre()
+                self.m_storage.store_ore(self.m_player.m_capacity)
+                self.m_player.deposit_ore()
 
             if self.m_player.m_rect.colliderect(self.m_heli.m_rect) and not self.m_heli.m_ore:
-                self.m_heli.stealOre(self.m_player.m_capacity)
-                self.m_player.depositOre()
+                self.m_heli.steal_ore(self.m_player.m_capacity)
+                self.m_player.deposit_ore()
 
     def check_win_loss_conditions(self):
         """
@@ -78,7 +78,7 @@ class gameMGMT:
             self.m_won = True
             self.end_game()
 
-        if self.m_heli.m_oreStolen >= 100 - self.m_win_condition:
+        if self.m_heli.m_ore_stolen > 100 - self.m_win_condition:
             self.m_lost = True
             self.end_game()
 
@@ -124,8 +124,8 @@ class gameMGMT:
         while self.m_lost or self.m_won:
             self.m_screen.fill("white")
             message = 'You lost!' if self.m_lost else 'You won!'
-            self.m_text = self.m_font.render(message, False, (0, 0, 0))
-            self.m_screen.blit(self.m_text, (self.m_screen.get_width() / 2, self.m_screen.get_height() / 2))
+            self.m_big_text = self.m_big_font.render(message, False, (0, 0, 0))
+            self.m_screen.blit(self.m_big_text, (self.m_screen.get_width() / 2, self.m_screen.get_height() / 2))
             pygame.display.flip()
 
             for event in pygame.event.get():
