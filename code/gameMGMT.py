@@ -3,13 +3,13 @@ from abc import ABC, abstractmethod
 from gameObject import GameObject
 from immovableObjects import ImmovableObject, Home, GasStation, Storage
 from movableObjects import MovableObject, Truck, Helicopter
+from helper import Button, InputBox
 
 class GameMGMT:
-    def __init__(self, params=None):
+    def __init__(self):
         """
         Initialize the game management class.
         """
-        self.m_params = params
         pygame.init()
         self.m_screen = pygame.display.set_mode((1280, 720))
         self.m_clock = pygame.time.Clock()
@@ -42,6 +42,7 @@ class GameMGMT:
         """
         Start the game.
         """
+        self.setParams(self.text_input_screen())
         self.run_game()
 
     def end_game(self):
@@ -57,7 +58,7 @@ class GameMGMT:
         if self.m_player.m_rect.colliderect(self.m_gas_station.m_rect):
             self.m_player.refuel()
 
-        if self.m_player.m_rect.colliderect(self.m_home.m_rect) and not self.m_player.m_ore:
+        if self.m_player.m_rect.colliderect(self.m_home.m_rect) and not self.m_player.m_ore and not self.m_home.m_ore_stored == 0:
             self.m_player.withdraw_ore()
             self.m_home.store_ore(self.m_player.m_capacity)
 
@@ -133,3 +134,66 @@ class GameMGMT:
                     self.m_lost = False
                     self.m_won = False
                     self.end_game()
+
+    def text_input_screen(self):
+        """
+        Display a text input screen to get user input.
+        """
+        input_boxes = [
+            InputBox(400, 50, 140, 32, self.m_font, '5'),
+            InputBox(400, 100, 140, 32, self.m_font, '1'),
+            InputBox(400, 150, 140, 32, self.m_font, '200'),
+            InputBox(400, 200, 140, 32, self.m_font, '150'),
+            #InputBox(400, 100, 140, 32, self.m_font),
+            InputBox(400, 250, 140, 32, self.m_font,  '80')
+        ]
+        labels = [
+            "Kapazitaet des Trucks:",
+            "Spritverbrauch pro Sekunde:",
+            "Geschwindigkeit des Trucks",
+            "Geschwindigkeit des Helikopters:",
+            "Schwellwert zum Gewinnen:",
+            #"Menge Erz:"
+        ]
+        submit_button = Button(50, 500, 140, 32, "Submit", self.m_font)
+        active = True
+
+        while active:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    active = False
+                    self.m_running = False
+                for box in input_boxes:
+                    box.handle_event(event)
+                if submit_button.is_clicked(event):
+                    active = False
+
+            # Clear the screen
+            self.m_screen.fill((255, 255, 255))
+
+            # Render and draw labels
+            for i, label in enumerate(labels):
+                label_surface = self.m_font.render(label, True, (0, 0, 0))
+                self.m_screen.blit(label_surface, (50, 50 + i * 50))
+
+            # Update and draw input boxes
+            for box in input_boxes:
+                box.update()
+                box.draw(self.m_screen)
+
+            # Draw the submit button
+            submit_button.draw(self.m_screen)
+
+            # Update the display
+            pygame.display.flip()
+
+        return [box.text for box in input_boxes]
+    
+
+    def setParams(self, params):
+        print(params)
+        self.m_player.m_capacity = int(params[0])
+        self.m_player.m_consumption = int(params[1])
+        self.m_player.m_speed = int(params[2])
+        self.m_heli.m_speed = int(params[3])
+        self.m_win_condition = int(params[4])
