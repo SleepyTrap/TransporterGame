@@ -42,7 +42,7 @@ class GameMGMT:
         """
         Start the game.
         """
-        self.setParams(self.text_input_screen())
+        self.set_params(self.text_input_screen())
         self.run_game()
 
     def end_game(self):
@@ -144,16 +144,14 @@ class GameMGMT:
             InputBox(400, 100, 140, 32, self.m_font, '1'),
             InputBox(400, 150, 140, 32, self.m_font, '200'),
             InputBox(400, 200, 140, 32, self.m_font, '150'),
-            #InputBox(400, 100, 140, 32, self.m_font),
-            InputBox(400, 250, 140, 32, self.m_font,  '80')
+            InputBox(400, 250, 140, 32, self.m_font, '80')
         ]
         labels = [
-            "Kapazitaet des Trucks:",
-            "Spritverbrauch pro Sekunde:",
-            "Geschwindigkeit des Trucks",
-            "Geschwindigkeit des Helikopters:",
-            "Schwellwert zum Gewinnen:",
-            #"Menge Erz:"
+            "Ore Capacity Truck",
+            "Fuel Consumption Truck per second:",
+            "Speed of Truck:",
+            "Speed of Helicopter:",
+            "Win Condition in %:"
         ]
         submit_button = Button(50, 500, 140, 32, "Submit", self.m_font)
         active = True
@@ -188,10 +186,11 @@ class GameMGMT:
             pygame.display.flip()
 
         return [box.text for box in input_boxes]
-    
 
-    def setParams(self, params):
-        print(params)
+    def set_params(self, params):
+        """
+        Set the game parameters based on user input.
+        """
         self.m_player.m_capacity = int(params[0])
         self.m_player.m_consumption = int(params[1])
         self.m_player.m_speed = int(params[2])
