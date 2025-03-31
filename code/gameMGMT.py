@@ -127,6 +127,10 @@ class GameMGMT:
             message = 'You lost!' if self.m_lost else 'You won!'
             self.m_big_text = self.m_big_font.render(message, False, (0, 0, 0))
             self.m_screen.blit(self.m_big_text, (self.m_screen.get_width() / 2, self.m_screen.get_height() / 2))
+            
+            
+            restart_button = Button(50, 500, 140, 32, "Restart", self.m_font)
+            restart_button.draw(self.m_screen)
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -134,6 +138,9 @@ class GameMGMT:
                     self.m_lost = False
                     self.m_won = False
                     self.end_game()
+                if restart_button.is_clicked(event):
+                    self = GameMGMT() #reset params
+                    self.start_game()
 
     def text_input_screen(self):
         """
