@@ -19,7 +19,7 @@ class GameMGMT:
         self.m_dt = 0
         self.m_win_condition = 80
         self.m_player = Truck(self.m_screen.get_width() / 2, self.m_screen.get_height() / 2, 500, 1, 20)
-        self.m_heli = Helicopter(self.m_screen.get_width() - 100, 0, 210)
+        self.m_heli = Helicopter(0, 0, 210)
         self.m_home = Home(100, self.m_screen.get_height() / 2)
         self.m_gas_station = GasStation(self.m_screen.get_width() / 2, self.m_screen.get_height() - 150)
         self.m_storage = Storage(self.m_screen.get_width() - 100, self.m_screen.get_height() - 100)
@@ -35,7 +35,7 @@ class GameMGMT:
         self.m_text = self.m_font.render(
             f'Fuel: {round(self.m_player.m_fuel)}, Player has Ore: {self.m_player.m_ore}, '
             f'Heli has Ore: {self.m_heli.m_ore}, Ore stored in Storage: {self.m_storage.m_ore_stored}, '
-            f'Ore stored in Home: {self.m_home.m_ore_stored}, Ore stolen by Heli: {self.m_heli.m_ore_stolen}', False, (0, 0, 0)
+            f'Ore stored in Home: {self.m_home.m_ore_stored}, Ore stolen by Heli: {self.m_heli.m_ore_stolen}', False, "white"
         )
 
     def start_game(self):
@@ -92,7 +92,7 @@ class GameMGMT:
                 if event.type == pygame.QUIT:
                     self.end_game()
 
-            self.m_screen.fill("white")
+            self.m_screen.fill("black")
 
             if self.m_player.move(self.m_dt):
                 self.end_game()
@@ -123,9 +123,9 @@ class GameMGMT:
         Display the end game message.
         """
         while self.m_lost or self.m_won:
-            self.m_screen.fill("white")
+            self.m_screen.fill("black")
             message = 'You lost!' if self.m_lost else 'You won!'
-            self.m_big_text = self.m_big_font.render(message, False, (0, 0, 0))
+            self.m_big_text = self.m_big_font.render(message, False, ("white"))
             self.m_screen.blit(self.m_big_text, (self.m_screen.get_width() / 2, self.m_screen.get_height() / 2))
             
             
@@ -174,11 +174,11 @@ class GameMGMT:
                     active = False
 
             # Clear the screen
-            self.m_screen.fill((255, 255, 255))
+            self.m_screen.fill("black")
 
             # Render and draw labels
             for i, label in enumerate(labels):
-                label_surface = self.m_font.render(label, True, (0, 0, 0))
+                label_surface = self.m_font.render(label, True, "white""")
                 self.m_screen.blit(label_surface, (50, 50 + i * 50))
 
             # Update and draw input boxes

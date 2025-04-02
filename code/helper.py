@@ -4,7 +4,7 @@ class Button:
     """
     Class representing a button.
     """
-    def __init__(self, x, y, w, h, text, font, color=(0, 0, 0), bg_color=(255, 255, 255)):
+    def __init__(self, x, y, w, h, text, font, color="white", bg_color=("black")):
         """
         Initialize the button with position, size, text, font, and colors.
         """
