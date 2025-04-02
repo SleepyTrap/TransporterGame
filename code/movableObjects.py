@@ -53,16 +53,16 @@ class Truck(MovableObject):
     def move(self, dt):
         if self.m_fuel > 0:
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_w]:
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.m_pos_y -= self.m_speed * dt
                 self.consume_fuel(dt)
-            if keys[pygame.K_s]:
+            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
                 self.m_pos_y += self.m_speed * dt
                 self.consume_fuel(dt)
-            if keys[pygame.K_a]:
+            if keys[pygame.K_a] or keys[pygame.K_LEFT]:
                 self.m_pos_x -= self.m_speed * dt
                 self.consume_fuel(dt)
-            if keys[pygame.K_d]:
+            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
                 self.m_pos_x += self.m_speed * dt
                 self.consume_fuel(dt)
             self.m_rect.center = (self.m_pos_x, self.m_pos_y)
