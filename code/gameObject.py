@@ -11,7 +11,7 @@ class GameObject(ABC):
         """
         self.m_pos_x = pos_x
         self.m_pos_y = pos_y
-        self.m_image = pygame.image.load('.\\imgs\\placeholder.png')
+        self.m_image = pygame.image.load('./imgs/placeholder.png')
         self.m_rect = self.m_image.get_rect(center=(self.m_pos_x, self.m_pos_y))
 
     @abstractmethod

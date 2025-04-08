@@ -35,7 +35,7 @@ class Home(ImmovableObject):
         self.set_image()
 
     def set_image(self):
-        self.m_image = pygame.image.load(".\\imgs\\home.png")
+        self.m_image = pygame.image.load("./imgs/home.png")
         self.m_rect = self.m_image.get_rect(center=(self.m_pos_x, self.m_pos_y))
 
     def draw(self, screen):
@@ -53,7 +53,7 @@ class GasStation(ImmovableObject):
         self.set_image()
 
     def set_image(self):
-        self.m_image = pygame.image.load(".\\imgs\\gas_station.png")
+        self.m_image = pygame.image.load("./imgs/gas_station.png")
         self.m_rect = self.m_image.get_rect(center=(self.m_pos_x, self.m_pos_y))
 
     def draw(self, screen):
@@ -69,7 +69,7 @@ class Storage(ImmovableObject):
         self.set_image()
 
     def set_image(self):
-        self.m_image = pygame.image.load(".\\imgs\\storage.png")
+        self.m_image = pygame.image.load("./imgs/storage.png")
         self.m_rect = self.m_image.get_rect(center=(self.m_pos_x, self.m_pos_y))
 
     def draw(self, screen):

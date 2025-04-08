@@ -70,7 +70,7 @@ class Truck(MovableObject):
             return True
 
     def set_image(self):
-        self.m_image = pygame.image.load(".\\imgs\\truck.png")
+        self.m_image = pygame.image.load("./imgs/truck.png")
         self.m_rect = self.m_image.get_rect(center=(self.m_pos_x, self.m_pos_y))
 
     def consume_fuel(self, dt):
@@ -119,7 +119,7 @@ class Helicopter(MovableObject):
         self.m_rect.center = (self.m_pos_x, self.m_pos_y)
 
     def set_image(self):
-        self.m_image = pygame.image.load(".\\imgs\\/helicopter.png")
+        self.m_image = pygame.image.load("./imgs/helicopter.png")
         self.m_rect = self.m_image.get_rect(center=(self.m_pos_x, self.m_pos_y))
 
     def steal_ore(self, amount):
